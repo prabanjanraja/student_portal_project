@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sendbird_flutter_dashchat/data/data.dart';
 import 'package:sendbird_sdk/sendbird_sdk.dart';
 
 class LoginView extends StatefulWidget {
@@ -8,8 +9,9 @@ class LoginView extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginView> {
-  final _appIdController =
-      TextEditingController(text: "YOUR_APPLICATION_ID_HERE");
+  final sendbird = SendbirdSdk(appId: '93DAA473-5B18-444A-BD77-129154709DE1');
+
+  final _email = TextEditingController();
   final _userIdController = TextEditingController();
   bool _enableSignInButton = false;
 
@@ -42,7 +44,7 @@ class LoginViewState extends State<LoginView> {
                 width: 50,
                 height: 50,
                 child: Image(
-                  image: AssetImage('assets/logoSendbird@3x.png'),
+                  image: AssetImage('assets/logoSendbirdFull@3x.png'),
                   fit: BoxFit.scaleDown,
                 )),
             SizedBox(height: 20),
@@ -50,7 +52,7 @@ class LoginViewState extends State<LoginView> {
                 style: Theme.of(context).textTheme.headline6),
             SizedBox(height: 40),
             TextField(
-              controller: _appIdController,
+              controller: _email,
               onChanged: (value) {
                 setState(() {
                   _enableSignInButton = _shouldEnableSignInButton();
@@ -58,18 +60,20 @@ class LoginViewState extends State<LoginView> {
               },
               decoration: InputDecoration(
                   border: InputBorder.none,
-                  labelText: 'App Id',
+                  labelText: 'Email Address',
+                  hintText: 'Enter your email address',
                   filled: true,
                   fillColor: Colors.grey[200],
                   suffixIcon: IconButton(
                     onPressed: () {
-                      _appIdController.clear();
+                      _email.clear();
                     },
                     icon: Icon(Icons.clear),
                   )),
             ),
             SizedBox(height: 10),
             TextField(
+              obscureText: true,
               controller: _userIdController,
               onChanged: (value) {
                 setState(() {
@@ -77,16 +81,18 @@ class LoginViewState extends State<LoginView> {
                 });
               },
               decoration: InputDecoration(
-                  border: InputBorder.none,
-                  labelText: 'User Id',
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      _userIdController.clear();
-                    },
-                    icon: Icon(Icons.clear),
-                  )),
+                border: InputBorder.none,
+                labelText: 'User Id',
+                hintText: 'Enter your user id',
+                filled: true,
+                fillColor: Colors.grey[200],
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _userIdController.clear();
+                  },
+                  icon: Icon(Icons.clear),
+                ),
+              ),
             ),
             SizedBox(height: 30),
             FractionallySizedBox(
@@ -98,7 +104,7 @@ class LoginViewState extends State<LoginView> {
   }
 
   bool _shouldEnableSignInButton() {
-    if (_appIdController.text.isEmpty) {
+    if (_email.text.isEmpty) {
       return false;
     }
     if (_userIdController.text.isEmpty) {
@@ -128,7 +134,7 @@ class LoginViewState extends State<LoginView> {
           foregroundColor: MaterialStateProperty.all<Color>(Colors.white)),
       onPressed: () {
         // Login with Sendbird
-        connect(_appIdController.text, _userIdController.text).then((user) {
+        connect(_email.text, _userIdController.text).then((user) {
           Navigator.pushNamed(context, '/channel_list');
         }).catchError((error) {
           print('login_view: _signInButton: ERROR: $error');
@@ -144,8 +150,8 @@ class LoginViewState extends State<LoginView> {
   Future<User> connect(String appId, String userId) async {
     // Init Sendbird SDK and connect with current user id
     try {
-      final sendbird = SendbirdSdk(appId: appId);
       final user = await sendbird.connect(userId);
+      curr_user = user;
       return user;
     } catch (e) {
       print('login_view: connect: ERROR: $e');

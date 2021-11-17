@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sendbird_flutter_dashchat/signup.dart';
 import 'login_view.dart';
 import 'channel_list_view.dart';
 import 'create_channel_view.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginView(),
         '/channel_list': (context) => ChannelListView(),
         '/create_channel': (context) => CreateChannelView(),
+        '/signup': (context) => SignupView(),
       },
       theme: ThemeData(
         fontFamily: "Gellix",

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sendbird_flutter_dashchat/data/data.dart';
+import 'package:sendbird_flutter_dashchat/profilepage.dart';
+import 'package:sendbird_flutter_dashchat/search.dart';
 
 import 'dmpage.dart';
 
@@ -65,21 +67,30 @@ class _NavBarState extends State<NavBar> {
           ),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
+          label: "Search",
+          icon: IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchView(),
+                  ),
+                );
+              },
+              icon: Icon(Icons.search)),
         ),
         BottomNavigationBarItem(
           icon: IconButton(
             icon: Icon(Icons.person),
             padding: EdgeInsets.all(0),
-            // onPressed: () {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => PersonalDetails(),
-            //     ),
-            //   );
-            // },
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileView(),
+                ),
+              );
+            },
           ),
           label: "Profile",
         ),

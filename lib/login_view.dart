@@ -38,7 +38,7 @@ class LoginViewState extends State<LoginView> {
   Widget body(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(left: 20, right: 20, top: 100),
-        child: Column(
+        child: ListView(
           children: [
             Container(
                 width: 50,
@@ -82,8 +82,8 @@ class LoginViewState extends State<LoginView> {
               },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                labelText: 'User Id',
-                hintText: 'Enter your user id',
+                labelText: 'Email Address',
+                hintText: 'Enter your email address',
                 filled: true,
                 fillColor: Colors.grey[200],
                 suffixIcon: IconButton(
@@ -98,6 +98,11 @@ class LoginViewState extends State<LoginView> {
             FractionallySizedBox(
               widthFactor: 1,
               child: _signInButton(context, _enableSignInButton),
+            ),
+            // create a button for signup
+            FractionallySizedBox(
+              widthFactor: 1,
+              child: _signUpButton(context),
             )
           ],
         ));
@@ -157,5 +162,20 @@ class LoginViewState extends State<LoginView> {
       print('login_view: connect: ERROR: $e');
       throw e;
     }
+  }
+
+  _signUpButton(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+          foregroundColor: MaterialStateProperty.all<Color>(Colors.grey[300])),
+      onPressed: () {
+        Navigator.pushNamed(context, '/signup');
+      },
+      child: Text(
+        "Sign Up",
+        style: TextStyle(fontSize: 20.0),
+      ),
+    );
   }
 }

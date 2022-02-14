@@ -74,11 +74,7 @@ class _NavBarState extends State<NavBar> {
         ),
         BottomNavigationBarItem(
           icon: IconButton(
-            icon: curr_user.profile_url == null
-                ? Icon(Icons.person)
-                : CircleAvatar(
-                    backgroundImage: NetworkImage(curr_user.profile_url),
-                  ),
+            icon: Icon(Icons.person),
             padding: EdgeInsets.all(0),
             // onPressed: () {
             //   Navigator.push(

@@ -9,7 +9,7 @@ class LoginView extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginView> {
-  final sendbird = SendbirdSdk(appId: '93DAA473-5B18-444A-BD77-129154709DE1');
+  final sendbird = SendbirdSdk(appId: '55CDFC64-6206-496B-BD2D-2C0A26FF3EC8');
 
   final _email = TextEditingController();
   final _userIdController = TextEditingController();
